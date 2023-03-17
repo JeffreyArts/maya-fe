@@ -174,6 +174,7 @@ export default defineComponent({
     margin: 0 0 48px;
     border: 4px solid transparent;
     background-color: #eee;
+    box-shadow: 0px 0px 16px rgba(0,0,0,.08);
 
     &.__hasImage {
         border-color: #eee;
@@ -196,6 +197,7 @@ export default defineComponent({
 }
 
 .step {
+    cursor: pointer;
     display: flex;
     width: 96px;
     aspect-ratio: 1/1;
@@ -207,6 +209,7 @@ export default defineComponent({
     transition: $transitionDefault;
     
     &.__isDisabled {
+        cursor: pointer;
         opacity: 0.5;
         filter: grayscale(100%);
         pointer-events: none;

@@ -28,10 +28,13 @@ This will build the project, and output the files to the dist directory.
 
 
 
-After installation you will have to generate an [OpenAI key](https://platform.openai.com/account/api-keys) and add it to the .env file
+After installation you will have to generate an [OpenAI key](https://platform.openai.com/account/api-keys) and add it to the .env file*
 ```
 VITE_OPENAI_KEY=sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+**NOTE** Do not add it to the .env file directly, but copy it to .env.local, and paste it in there.
+
+
 
 This project also requires the [gsap-bonus.tgz file](https://greensock.com/forums/topic/35838-installation-of-bonus-plugins-with-typescript-support/#comment-179619). Which can be obtained by purchasing a Greensock license.
 
