@@ -25,6 +25,7 @@ import iconMic from "@/components/icon-mic.vue"
 // import { saveAs } from "file-saver"
 import MicRecorder from "mic-recorder"
 import OpenAI from "@/stores/openai"
+import axios from "axios"
 // import { AudioContext } from "standardized-audio-context"
 import _ from "lodash"
   
@@ -181,8 +182,16 @@ export default defineComponent({
             }
 
             try {
-                const completion = await this.open.ai.createTranscription(this.audioFile, "whisper-1")
-                this.$emit("update:modelValue", completion.data.text)
+                const formData = new FormData()
+
+                // Append the audio file to the FormData object
+                formData.append("audio", this.audioFile, "sample.wav")
+                const completion = await axios.post( `${import.meta.env.VITE_REST_API}/api/audio-to-texts`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                this.$emit("update:modelValue", completion.data.data.text)
                 this.state = "done"
             } catch (error: Error | any) {
                 this.state = "done"
