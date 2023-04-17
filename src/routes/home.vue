@@ -2,7 +2,7 @@
     <div class="home">
             <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']">
 
-                <img :src="imageComputed" v-if="image">
+                <img :src="imageComputed" v-if="image" @click="downloadImage">
             </figure>
 
             <div class="steps">
@@ -31,7 +31,7 @@ import {defineComponent} from "vue"
 import recordButton from "@/components/record-button.vue"
 import iconProcessing from "@/components/icon-processing.vue"
 import axios from "axios"
-import dayjs from "dayjs"
+import saveAs from "file-saver"
 import OpenAI from "@/stores/openai"
 import _ from "lodash"
 
@@ -146,6 +146,13 @@ export default defineComponent({
                 }
             }
         },
+        downloadImage() {
+            if (!this.image) return
+            const name = "image.jpg"
+            // create image blob from this.image
+            const blob = new Blob([this.image], { type: "image/jpeg" })
+            saveAs(blob, `${name}`)
+        }
     },
 })
 
