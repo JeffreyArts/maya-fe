@@ -1,6 +1,9 @@
 <template>
     <div class="home">
-            <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']"><img :src="imageComputed" v-if="image" @click="downloadImage"></figure>
+        <div class="home-container">
+            <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']">
+                <img :src="imageComputed" v-if="image" @click="downloadImage">
+            </figure>
 
             <div class="steps">
                 <record-button v-model="queryInput" class="step" :class="[ step == 2 ?'__isDisabled':'']" @click="resetStep"></record-button>
@@ -9,17 +12,11 @@
                 </span>
             </div>
 
-            <!-- <select v-model="state">
-                <option value="idle">Idle</option>
-                <option value="error">Error</option>
-                <option value="processing">Processing</option>
-                <option value="ready">Ready</option>
-                <option value="done">Done</option>
-            </select> -->
             <div class="query-input">
                 {{ queryInput }}
             </div>
         </div>
+    </div>
 </template>
 
 
@@ -126,21 +123,26 @@ export default defineComponent({
 @import "@/assets/scss/variables.scss";
 .home {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
+    margin: 0;
+}
+
+.home-container {
+    padding: 32px 0 58px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
-    padding: 32px 0 58px;
     flex-flow: column;
+    max-width: 640px;
+    height: 100vh;
+    margin: auto;
 }
 
 .image-container {
     aspect-ratio: 1/1;
-    max-height: calc(100vh - 160px);
-    margin: 0;
-    height: 100%; 
-    max-height: calc(100vh - 224px);
+    width: 100%;
+    max-width: calc(100vh - 224px);
     margin: 0 0 48px;
     border: 8px dotted transparent;
     background-color: #fefff3;
@@ -161,6 +163,7 @@ export default defineComponent({
         width: 100%;
     };
 }
+
 
 .steps {
     display: flex;
