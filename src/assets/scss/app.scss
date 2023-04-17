@@ -1,6 +1,11 @@
 #app {
     min-height: 100%;
     display: flex;
+    background-color: #fcfee5;
+    background-image: url("/bg.png");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: 128px;
 }
 
 html,

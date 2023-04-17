@@ -55,25 +55,25 @@ export default defineComponent({
 
         gsap.set(".i-mic #holder", {
             opacity: 1,
-            fill: "#333"
+            fill: "#74000e"
         })
         
         
         gsap.set(".i-mic #target", {
             opacity: 1,
-            fill: "#333",
+            fill: "#74000e",
             transformOrigin: "center center" 
         })
 
         gsap.set(".i-mic #square", {
             opacity: 0,
-            fill: "#333",
+            fill: "#74000e",
             transformOrigin: "center center" 
         })
 
         gsap.set(".i-mic #mic", {
             opacity: 0,
-            fill: "#333",
+            fill: "#74000e",
             transformOrigin: "center center" 
         })
 
@@ -125,7 +125,7 @@ export default defineComponent({
                 morphSVG: {shape: "#square"}, 
                 duration: .72,
                 opacity: 1,
-                fill: "#333",
+                fill: "#74000e",
                 ease: "linear",
                 onComplete: () => {
                     this.processing = gsap.to(".i-mic #target", {
@@ -143,7 +143,7 @@ export default defineComponent({
             gsap.to(".i-mic #target", {
                 duration: .72,
                 opacity: 0,
-                // fill: "#333",
+                // fill: "#74000e",
                 ease: "power2.inOut",
                 onComplete: () => {
                     gsap.set("#checkmark", {
@@ -153,7 +153,7 @@ export default defineComponent({
                         morphSVG: {shape: "#mic"}, 
                         duration: 0.1,
                         rotation: 0,
-                        fill: "#333",
+                        fill: "#74000e",
                     })
                     
 
@@ -176,7 +176,7 @@ export default defineComponent({
                         .to(".i-mic #holder, #target", {
                             duration: .72,
                             opacity: 1,
-                            fill: "#111",
+                            fill: "#74000e",
                             ease: "power1.in",
                             onComplete: () => {
                                 this.$emit("update:modelValue", "idle")
@@ -200,7 +200,7 @@ export default defineComponent({
 
 #checkmark {
 	fill:none;
-    stroke:#333;
+    stroke:#74000e;
     stroke-width:32;
     stroke-linecap:round;
     stroke-miterlimit:10;

@@ -3,28 +3,14 @@
         <span class="icon" @click="startRecording">
             <icon-mic v-model="state" />
         </span>
-
-        <!-- <select v-model="state">
-            <option value="idle">Idle</option>
-            <option value="recording">Recording</option>
-            <option value="processing">Processing</option>
-            <option value="done">done</option>
-        </select>
-
-      <ascii-button @click="startRecording" v-if="!isRecording">
-        Start recording
-      </ascii-button> -->
-      
     </div>
   </template>
   
 <script lang="ts">
 import { defineComponent } from "vue"
-import asciiButton from "@/components/ascii-button.vue"
 import iconMic from "@/components/icon-mic.vue"
 // import { saveAs } from "file-saver"
 import MicRecorder from "mic-recorder"
-import OpenAI from "@/stores/openai"
 import axios from "axios"
 // import { AudioContext } from "standardized-audio-context"
 import _ from "lodash"
@@ -37,11 +23,6 @@ export default defineComponent({
             type: String,
             required: true,
         },
-    },
-    setup() {
-        const open = OpenAI()
-  
-        return { open }
     },
     data: () => {
         return {
@@ -186,6 +167,7 @@ export default defineComponent({
 
                 // Append the audio file to the FormData object
                 formData.append("audio", this.audioFile, "sample.wav")
+                formData.append("language", "nl")
                 const completion = await axios.post( `${import.meta.env.VITE_REST_API}/api/audio-to-texts`, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -202,14 +184,7 @@ export default defineComponent({
                     console.log(error.message)
                 }
             }
-            // openai.createTranscription()
         },
-    //     saveAudio() {
-    //         if (!this.audioFile) {
-    //             return
-    //         }
-    //         saveAs(this.audioFile, "file.wav")
-    //     },
     },
 })
 </script>

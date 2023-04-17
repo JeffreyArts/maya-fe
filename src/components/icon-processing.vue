@@ -77,13 +77,13 @@ export default defineComponent({
 
         gsap.set(".i-pro #target .line-1", {
             opacity: 1,
-            fill: "#333",
+            fill: "#74000e",
             morphSVG: "#waiting .line-1"
         })
         
         gsap.set(".i-pro #target .line-2", {
             opacity: 1,
-            fill: "#333",
+            fill: "#74000e",
             morphSVG: "#waiting .line-2"
         })
 
@@ -125,7 +125,7 @@ export default defineComponent({
             }).to(".i-pro #target .line-1, #target .line-2", {
                 duration: .4,
                 delay: 1,
-                fill: "#333",
+                fill: "#74000e",
             })
 
             gsap.timeline().to(".i-pro #target .line-2", {
@@ -294,7 +294,7 @@ export default defineComponent({
 #arrowhead-2,
 #arrows {
 	fill:none;
-    stroke:#333;
+    stroke:74000e333;
     stroke-width:32;
     stroke-linecap:round;
     stroke-miterlimit:10;

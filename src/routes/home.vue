@@ -1,9 +1,6 @@
 <template>
     <div class="home">
-            <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']">
-
-                <img :src="imageComputed" v-if="image" @click="downloadImage">
-            </figure>
+            <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']"><img :src="imageComputed" v-if="image" @click="downloadImage"></figure>
 
             <div class="steps">
                 <record-button v-model="queryInput" class="step" :class="[ step == 2 ?'__isDisabled':'']" @click="resetStep"></record-button>
@@ -46,11 +43,10 @@ export default defineComponent({
     data() {
         return {
             queryInput: "",
-            isProcessing: false,
             step: 1,
             state: "idle",
-            prompt: "",
             query: "",
+            language: "nl",
             image: "",
             consoleEvents: [] as Array<string>,
         }
@@ -67,9 +63,8 @@ export default defineComponent({
                 if (newValue !== "") {
                     this.step = 2
                     this.state = "processing"
-                    console.log(newValue)
                     this.query = newValue
-                    this.processQuery()
+                    this.requestImage()
                 }
             },
         },
@@ -78,42 +73,7 @@ export default defineComponent({
         resetStep() {
             this.step = 1
         },
-        async processQuery() {
-            this.isProcessing = true
-            try {
-                const o = await this.open.ai.createChatCompletion({
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        {
-                            role: "assistant",
-                            content: "you are a prompt master, your job is to come up with a single prompt that can be used to generate a Maya symbol with Dalle-2.",
-                        },
-                        {
-                            role: "user",
-                            content: `Toon mij een prompt voor een symbol van een ${this.query}`,
-                            // content: "Ik wil het graag hebben over kapauters in het oerwoud. Daar wonen ze. Ze hebben hele mooie huisjes, hele mooie gebouwen. Beetje flatgebouwen, als in zwammen. Gewoon zwammen, flatgebouwen. Heel hoog, in hele lange grote bomen. En ze houden van vissen. Vliegvissen. Dat vinden ze mooi. Dat vinden ze leuk om te doen. En ze houden ook van schaatsen. Maar dat is wel een probleem, want ze wonen in het oerwoud. Dus ze kunnen eigenlijk nooit schaatsen. Maar ja, je kan ook niet alles hebben in het leven.",
-                        },
-                    ],
-                })
-                this.isProcessing = false
-                this.prompt = `${o.data.choices[0].message.content}, style of ancient maya symbol, positive`
-
-                this.requestImage()
-                console.log(this.prompt)
-            } catch (error: Error | any) {
-                this.isProcessing = false
-                this.step = 1
-                this.state = "error"
-                if (error.response) {
-                    console.log(error.response.status)
-                    console.log(error.response.data)
-                } else {
-                    console.log(error.message)
-                }
-            }
-        },
         async requestImage() {
-
             this.state = "processing"
             this.step = 2
 
@@ -121,7 +81,7 @@ export default defineComponent({
                 const request = await axios.post(`${import.meta.env.VITE_REST_API}/api/maya-images`, {
                     "data": {
                         query: this.query,
-                        prompt: this.prompt
+                        language: this.language,
                     }
                 })
                 
@@ -130,7 +90,6 @@ export default defineComponent({
                 
                 this.step = 3
             } catch (error: Error | any) {
-                this.isProcessing = false
                 this.step = 1
                 this.state = "error"
 
@@ -148,7 +107,7 @@ export default defineComponent({
         },
         downloadImage() {
             if (!this.image) return
-            const name = "maya-symbol.jpg"
+            const name = "maya-symbool.jpg"
             fetch(this.imageComputed)
                 .then(function(response) {
                     return response.blob()
@@ -169,10 +128,10 @@ export default defineComponent({
     width: 100%;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0;
+    padding: 32px 0 58px;
     flex-flow: column;
 }
 
@@ -183,12 +142,14 @@ export default defineComponent({
     height: 100%; 
     max-height: calc(100vh - 224px);
     margin: 0 0 48px;
-    border: 4px solid transparent;
-    background-color: #eee;
+    border: 8px dotted transparent;
+    background-color: #fefff3;
+    padding: 8px;
     box-shadow: 0px 0px 16px rgba(0,0,0,.08);
 
     &.__hasImage {
-        border-color: #eee;
+        border-color: #74000e;
+        background-color: transparent;
     }
 
     &.__isProcessing {
@@ -213,8 +174,8 @@ export default defineComponent({
     width: 96px;
     aspect-ratio: 1/1;
     border-radius: 100%;
-    border: 4px solid #dedede;
-    background: #fff;
+    border: 4px solid #74000e;
+    background: transparent;
     justify-content: center;
     align-items: center;
     transition: $transitionDefault;
@@ -227,7 +188,8 @@ export default defineComponent({
     }
 
     &:hover {
-        border-color: #ccc;
+        border-color: #9f0013;
+        background-color: #efefd8;
     }
 
     + .step {
@@ -235,6 +197,7 @@ export default defineComponent({
     }
     
     svg {
+        fill: #74000e;
         width: 48px;
     }
 }
@@ -242,9 +205,10 @@ export default defineComponent({
 .query-input {
     position: fixed;
     top: 0;
+    display: none;
     right: 0;
     max-width: 128px;
-    background-color: #fff;
+    background-color: transparent;
     color: transparent;
     &:hover {
         color: #000;
