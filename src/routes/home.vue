@@ -1,17 +1,21 @@
 <template>
     <div class="home">
         <div class="home-container">
-            <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']">
-                <img :src="imageComputed" v-if="image" @click="downloadImage">
-            </figure>
-
-            <div class="steps">
-                <record-button v-model="queryInput" class="step" :class="[ step == 2 ?'__isDisabled':'']" @click="resetStep"></record-button>
-                <span class="step" :class="[ step == 1 ?'__isDisabled':'']" @click="requestImage">
-                    <icon-processing v-model="state" />
-                </span>
-            </div>
-
+            <header class="image-container-wrapper">
+                <figure class="image-container" :class="[image ? '__hasImage' : '', step == 2 ? '__isProcessing': '']">
+                    <img :src="imageComputed" v-if="image" @click="downloadImage">
+                </figure>
+            </header>
+                
+            <footer>
+                <div class="steps">
+                    <record-button v-model="queryInput" class="step" :class="[ step == 2 ?'__isDisabled':'']" @click="resetStep"></record-button>
+                    <span class="step" :class="[ step == 1 ?'__isDisabled':'']" @click="requestImage">
+                        <icon-processing v-model="state" />
+                    </span>
+                </div>
+            </footer>
+                
             <div class="query-input">
                 {{ queryInput }}
             </div>
@@ -128,7 +132,7 @@ export default defineComponent({
 }
 
 .home-container {
-    padding: 32px 0 58px;
+    padding: 32px 0 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -143,10 +147,10 @@ export default defineComponent({
     aspect-ratio: 1/1;
     width: 100%;
     max-width: calc(100vh - 224px);
-    margin: 0 0 48px;
     border: 8px dotted transparent;
     background-color: #fefff3;
     padding: 8px;
+    margin: 0;
     box-shadow: 0px 0px 16px rgba(0,0,0,.08);
 
     &.__hasImage {
@@ -159,16 +163,26 @@ export default defineComponent({
             filter: blur(4px) grayscale(100%);
         }
     }
+
     img {
+        display: block;
         width: 100%;
     };
 }
 
+.image-container-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .steps {
     display: flex;
     justify-content: center;
     flex-flow: row no-wrap;
+    margin: 58px 0;
 }
 
 .step {
