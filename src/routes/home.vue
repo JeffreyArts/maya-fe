@@ -148,10 +148,14 @@ export default defineComponent({
         },
         downloadImage() {
             if (!this.image) return
-            const name = "image.jpg"
-            // create image blob from this.image
-            const blob = new Blob([this.image], { type: "image/jpeg" })
-            saveAs(blob, `${name}`)
+            const name = "maya-symbol.jpg"
+            fetch(this.image)
+                .then(function(response) {
+                    return response.blob()
+                })
+                .then(function(blob) {
+                    saveAs(blob, name)
+                })
         }
     },
 })
