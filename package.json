@@ -26,6 +26,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/lodash": "^4.14.191",
     "@types/pouchdb": "^6.4.0",
     "@types/pouchdb-browser": "^6.1.3",
