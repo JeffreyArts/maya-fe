@@ -149,7 +149,7 @@ export default defineComponent({
         downloadImage() {
             if (!this.image) return
             const name = "maya-symbol.jpg"
-            fetch(this.image)
+            fetch(this.imageComputed)
                 .then(function(response) {
                     return response.blob()
                 })
