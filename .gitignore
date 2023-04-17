@@ -25,3 +25,4 @@ deploy.sh
 *.sln
 *.sw?
 gsap-bonus.tgz
+.env.*
