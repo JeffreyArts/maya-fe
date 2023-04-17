@@ -19,6 +19,10 @@
             <div class="query-input">
                 {{ queryInput }}
             </div>
+
+            <a href="https://www.jeffreyarts.nl" target="_blank" class="signature">
+                <img src="/signature.png" alt="Jeffrey Arts">
+            </a>
         </div>
     </div>
 </template>
@@ -233,5 +237,14 @@ export default defineComponent({
     
 }
 
+.signature {
+    position: absolute;
+    bottom: 24px;
+    right: 4px;
+    img {
+        height: 32px;
+        rotate: -1.6deg;
+    }
+}
 
 </style>
