@@ -34,17 +34,12 @@ import recordButton from "@/components/record-button.vue"
 import iconProcessing from "@/components/icon-processing.vue"
 import axios from "axios"
 import saveAs from "file-saver"
-import OpenAI from "@/stores/openai"
 import _ from "lodash"
 
 export default defineComponent({
     name: "homePage",
     components: { recordButton, iconProcessing },
     props: [],
-    setup() {
-        const open = OpenAI()
-        return { open }
-    },
     data() {
         return {
             queryInput: "",
